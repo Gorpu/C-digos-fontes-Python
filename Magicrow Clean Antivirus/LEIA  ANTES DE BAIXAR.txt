@@ -1,0 +1,4 @@
+1-baixe todos os arquivos para uma unica pasta
+2-tenha todas as bibliotecas instaladas
+3-Copie o atalho do  executavel (Magicrow Clean.exe) para sua area de trabalho
+4-Após isso é só iniciar o atalho do programa
