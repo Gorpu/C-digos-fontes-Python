@@ -1,25 +1,22 @@
-from inspect import _void
-from multiprocessing import Event
 import matplotlib.pyplot as plt
 import time
-import pygame
 
-pygame.init()
 tempo=time.localtime()
 
 dia=tempo[2]
 mes=tempo[1]
 ano=tempo[0]
 
+arkjson="{"
 ns=0
 ac=0
 quantidade = 0
 
-leites=[]
+diasMes=[]
 quan=[]
 
 void = ' '*10000
-input("""
+menuM=input("""
 Analise de Rentabilidade mensal e Média Diaria
           
 Versão: 0.1
@@ -28,21 +25,35 @@ Aperte [ENTER] para coninuar""")
 while True:
     print(f'''{void}''')
     ac+=1
-    print(f"Dia {ac}")
+    diap=print(f"Dia {ac}")
     quantidade1=int(input("Valor Diário Obtido: "))
     quantidade=quantidade1
     ns+=quantidade
+    ###arquivo json##
+    arkjson+=f'''
+    "dia {ac}": ["R$ {quantidade1}"],'''
+
+    ### SALVANDO
+    with open('graficomath.json' ,'w') as arquivo:
+        for valor in arkjson:
+            arquivo.write(str(valor))            
     ad=input("Continuar?(s/n) ")
     if ad=="s":
-        leites.append(f"dia {ac}")
+        diasMes.append(f"dia {ac}")
         quan.append(quantidade)
     if ad=="n":
-        leites.append(f"dia {ac}")
+        arkjson+='''
+    "dia 0": ["R$ 0"]
+    }'''
+        with open('graficomath.json' ,'w') as arquivo:
+            for valor in arkjson:
+                arquivo.write(str(valor))
+        diasMes.append(f"dia {ac}")
         quan.append(quantidade)
 #Espaço entre as barras
         fig, ax = plt.subplots(figsize=(8, 5))
 #Grafico
-        ax.bar(leites, quan, color=["red", "green", "brown"])
+        ax.bar(diasMes, quan, color=["red", "green", "brown"])
         for idx, val in enumerate(quan):
             txt = f"{val} R$"
             y_l= val
